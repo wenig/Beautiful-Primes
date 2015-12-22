@@ -1,0 +1,45 @@
+<html>
+<body>
+	<canvas id="myCanvas" width="5000" height="5000"></canvas>
+	<script>
+		Array.prototype.remove = function() {
+			var what, a = arguments, L = a.length, ax;
+			while (L && this.length) {
+				what = a[--L];
+				while ((ax = this.indexOf(what)) !== -1) {
+					this.splice(ax, 1);
+				}
+			}
+			return this;
+		};
+		
+		var primes = prime_numbers(5000);
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		for(var i = 0; i < primes.length; i++){
+			ctx.fillRect(primes[i], 0, 2,2);
+			for(var o = 0; o < primes.length; o++){
+				ctx.fillRect(primes[o]*0.001*primes[i], i, 2,2);
+			}
+		}
+		//ctx.moveTo(0, 0);
+		//ctx.lineTo(300, 500);
+		
+		function prime_numbers(max) {
+			result = [];
+			for(var i = 1; i <= max; i++){
+				result.push(i);
+			}
+			for(var a = 2; a <= 10; a++){
+				for(var b = 2; b <= max; b++){
+					if(b*a > max){
+						break;
+					}
+					result.remove(a*b);
+				}
+			}
+			return result;
+		}
+	</script>
+</body>
+</html>
